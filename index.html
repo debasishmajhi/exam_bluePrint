@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSOU PEG-201 Exam Strategist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap');
+
+        :root {
+            --bg-main: #fcfaf7;
+            --accent-primary: #134e4a;
+            --accent-secondary: #99f6e4;
+            --text-main: #1c1917;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(19, 78, 74, 0.1);
+        }
+
+        .category-a { border-left: 4px solid #059669; }
+        .category-b { border-left: 4px solid #0891b2; }
+        .category-c { border-left: 4px solid #d97706; }
+
+        @media (max-width: 768px) {
+            .chart-container { height: 300px; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <nav class="fixed top-0 w-full z-50 bg-white/90 border-b border-stone-200 px-6 py-3 flex justify-between items-center backdrop-blur-md">
+        <div class="flex items-center space-x-2">
+            <div class="w-8 h-8 bg-teal-900 rounded-lg flex items-center justify-center text-white font-bold">P</div>
+            <span class="text-xl font-bold tracking-tight text-teal-950 uppercase hidden sm:block">PEG-201 Blueprint</span>
+        </div>
+        <div class="hidden md:flex space-x-8 text-sm font-semibold uppercase tracking-wider text-stone-600">
+            <a href="#dashboard" class="hover:text-teal-800 transition">Dashboard</a>
+            <a href="#units" class="hover:text-teal-800 transition">Unit Guide</a>
+            <a href="#theorists" class="hover:text-teal-800 transition">Theorists</a>
+            <a href="#strategy" class="hover:text-teal-800 transition">Exam Strategy</a>
+        </div>
+        <button onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})" class="bg-teal-900 text-white px-4 py-2 rounded-full text-xs font-bold hover:bg-teal-800 transition">
+            GET EXAM READY
+        </button>
+    </nav>
+
+    <main class="pt-24 pb-12 px-4 max-w-7xl mx-auto">
+        
+        <header class="text-center mb-16 animate-fade-in">
+            <p class="text-teal-700 font-bold tracking-widest uppercase text-sm mb-2">Odisha State Open University</p>
+            <h1 class="text-4xl md:text-6xl font-black text-stone-900 mb-4 leading-tight">Postcolonial Literatures Analysis</h1>
+            <p class="text-stone-600 max-w-2xl mx-auto text-lg leading-relaxed">
+                A diagnostic strategic blueprint for the October 2024 TEE. This application synthesizes 16 units of complex literary theory into actionable insights and high-probability focus areas.
+            </p>
+        </header>
+
+        <section id="dashboard" class="mb-20">
+            <div class="mb-8 border-l-4 border-teal-800 pl-6">
+                <h2 class="text-3xl font-bold text-stone-900 mb-3">Executive Dashboard</h2>
+                <p class="text-stone-600 max-w-3xl">
+                    Understand the terrain before you begin. This section breaks down the 75-mark assessment based on Bloom's Taxonomy and unit probabilities. Use these charts to identify where your biggest point-earning opportunities lie.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                <div class="glass-card p-6 rounded-2xl shadow-sm">
+                    <h3 class="text-center font-bold text-stone-700 mb-6 uppercase text-xs tracking-widest">Mark Distribution by Group</h3>
+                    <div class="chart-container">
+                        <canvas id="marksChart"></canvas>
+                    </div>
+                    <div class="mt-6 grid grid-cols-2 gap-4 text-xs">
+                        <div class="p-3 bg-stone-50 rounded-lg"><span class="font-bold text-teal-800">Group D:</span> 15 Marks (Synthesis)</div>
+                        <div class="p-3 bg-stone-50 rounded-lg"><span class="font-bold text-teal-800">Group C:</span> 20 Marks (Application)</div>
+                        <div class="p-3 bg-stone-50 rounded-lg"><span class="font-bold text-teal-800">Group B:</span> 25 Marks (Comprehension)</div>
+                        <div class="p-3 bg-stone-50 rounded-lg"><span class="font-bold text-teal-800">Group A:</span> 15 Marks (Recall)</div>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl shadow-sm">
+                    <h3 class="text-center font-bold text-stone-700 mb-6 uppercase text-xs tracking-widest">Unit Success Probability</h3>
+                    <div class="chart-container">
+                        <canvas id="probabilityChart"></canvas>
+                    </div>
+                    <p class="mt-4 text-xs text-stone-500 italic text-center">Charts visualize probability of appearance in 15/10 mark sections.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="units" class="mb-20">
+            <div class="mb-8 border-l-4 border-teal-800 pl-6">
+                <h2 class="text-3xl font-bold text-stone-900 mb-3">Interactive Unit Explorer</h2>
+                <p class="text-stone-600 max-w-3xl">
+                    Every unit contains distinct examinable categories. Filter by priority to see which concepts demand deep analysis (Category A) versus those requiring only a rudimentary grasp (Category D).
+                </p>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-md border border-stone-100 overflow-hidden">
+                <div class="p-4 bg-stone-50 border-b border-stone-200 flex flex-wrap gap-4 items-center justify-between">
+                    <div class="flex gap-2">
+                        <button onclick="filterUnits('all')" class="px-4 py-1.5 rounded-full bg-teal-900 text-white text-sm font-bold shadow-sm hover:bg-teal-800 transition">All Units</button>
+                        <button onclick="filterUnits('A')" class="px-4 py-1.5 rounded-full bg-white border border-stone-300 text-stone-700 text-sm font-bold hover:border-teal-600 transition">High Priority</button>
+                    </div>
+                    <input type="text" id="unitSearch" placeholder="Search concept (e.g. Mimicry)..." onkeyup="searchUnits()" class="px-4 py-2 bg-white border border-stone-300 rounded-lg text-sm w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-teal-700">
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left" id="unitTable">
+                        <thead class="bg-stone-50 text-stone-500 text-xs uppercase tracking-widest font-bold">
+                            <tr>
+                                <th class="px-6 py-4">Unit / Concept</th>
+                                <th class="px-6 py-4">Category</th>
+                                <th class="px-6 py-4">Prob.</th>
+                                <th class="px-6 py-4">Bloom's Level</th>
+                                <th class="px-6 py-4">Target Marks</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm divide-y divide-stone-100" id="unitTableBody">
+                            <!-- JS will populate this -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="theorists" class="mb-20">
+            <div class="mb-8 border-l-4 border-teal-800 pl-6">
+                <h2 class="text-3xl font-bold text-stone-900 mb-3">Theoretical Pillars</h2>
+                <p class="text-stone-600 max-w-3xl">
+                    Mastering these thinkers is non-negotiable. Use the "Keyword Study" cards below to lock in the essential terminology that examiners look for when awarding top marks.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Thinker Cards -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:-translate-y-1 transition duration-300">
+                    <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center text-teal-900 font-bold mb-4">ES</div>
+                    <h4 class="font-bold text-lg mb-1">Edward Said</h4>
+                    <p class="text-xs text-teal-800 font-bold mb-3 uppercase tracking-tighter">Orientalism</p>
+                    <p class="text-xs text-stone-600 mb-4 italic">"Orientalism is a style of thought based on binary opposition."</p>
+                    <div class="flex flex-wrap justify-center gap-1">
+                        <span class="px-2 py-0.5 bg-stone-100 text-stone-700 rounded text-[10px] font-bold">Discourse</span>
+                        <span class="px-2 py-0.5 bg-stone-100 text-stone-700 rounded text-[10px] font-bold">Power/Knowledge</span>
+                        <span class="px-2 py-0.5 bg-stone-100 text-stone-700 rounded text-[10px] font-bold">Contrapuntal</span>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:-translate-y-1 transition duration-300">
+                    <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center text-teal-900 font-bold mb-4">GS</div>
+                    <h4 class="font-bold text-lg mb-1">Gayatri Spivak</h4>
+                    <p class="text-xs text-teal-800 font-bold mb-3 uppercase tracking-tighter">Subalternity</p>
+                    <p class="text-xs text-stone-600 mb-4 italic">"Can the subaltern speak? The subaltern is doubly silenced."</p>
+                    <div class="flex flex-wrap justify-center gap-1">
+                        <span class="px-2 py-0.5 bg-stone-100 text-stone-700 rounded text-[10px] font-bold">Epistemic Violence</span>
+                        <span class="px-2 py-0.5 bg-stone-100 text-stone-700 rounded text-[10px] font-bold">Double Silencing</span>
+                        <span class="px-2 py-0.5 bg-stone-100 text-stone-700 rounded text-[10px] font-bold">Sati</span>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:-translate-y-1 transition duration-300">
+                    <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center text-teal-900 font-bold mb-4">HB</div>
+                    <h4 class="font-bold text-lg mb-1">Homi Bhabha</h4>
+                    <p class="text-xs text-teal-800 font-bold mb-3 uppercase tracking-tighter">Hybridity</p>
+                    <p class="text-xs text-stone-600 mb-4 italic">"Almost the same, but not quite."</p>
+                    <div class="flex flex-wrap justify-center gap-1">
+                        <span class="px-2 py-0.5 bg-stone-100 text-stone-700 rounded text-[10px] font-bold">Mimicry</span>
+                        <span class="px-2 py-0.5 bg-stone-100 text-stone-700 rounded text-[10px] font-bold">Third Space</span>
+                        <span class="px-2 py-0.5 bg-stone-100 text-stone-700 rounded text-[10px] font-bold">Ambivalence</span>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl flex flex-col items-center text-center hover:-translate-y-1 transition duration-300">
+                    <div class="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center text-teal-900 font-bold mb-4">FF</div>
+                    <h4 class="font-bold text-lg mb-1">Frantz Fanon</h4>
+                    <p class="text-xs text-teal-800 font-bold mb-3 uppercase tracking-tighter">Decolonization</p>
+                    <p class="text-xs text-stone-600 mb-4 italic">"Violence is a cleansing force for the native."</p>
+                    <div class="flex flex-wrap justify-center gap-1">
+                        <span class="px-2 py-0.5 bg-stone-100 text-stone-700 rounded text-[10px] font-bold">Manichaean</span>
+                        <span class="px-2 py-0.5 bg-stone-100 text-stone-700 rounded text-[10px] font-bold">Epidermalization</span>
+                        <span class="px-2 py-0.5 bg-stone-100 text-stone-700 rounded text-[10px] font-bold">Catharsis</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="trajectory" class="mb-20">
+            <div class="mb-8 border-l-4 border-teal-800 pl-6">
+                <h2 class="text-3xl font-bold text-stone-900 mb-3">The Postcolonial Narrative Flow</h2>
+                <p class="text-stone-600 max-w-3xl">
+                    A Group D essay requires you to connect discrete theories into a unified story of human history. Follow the logic flow below to structure your long-answer responses.
+                </p>
+            </div>
+
+            <div class="flex flex-col space-y-4 max-w-2xl mx-auto">
+                <div class="p-4 bg-teal-900 text-white rounded-xl text-center font-bold shadow-lg">COLONIALISM <span class="block text-[10px] font-normal opacity-70">Physical Occupation</span></div>
+                <div class="h-6 w-0.5 bg-teal-200 mx-auto"></div>
+                <div class="p-4 bg-teal-700 text-white rounded-xl text-center font-bold shadow-md">ORIENTALISM <span class="block text-[10px] font-normal opacity-80">Discursive Justification</span></div>
+                <div class="h-6 w-0.5 bg-teal-200 mx-auto"></div>
+                <div class="p-4 bg-teal-600 text-white rounded-xl text-center font-bold">HYBRIDITY / MIMICRY <span class="block text-[10px] font-normal opacity-80">Psychological Negotiation</span></div>
+                <div class="h-6 w-0.5 bg-teal-200 mx-auto"></div>
+                <div class="p-4 bg-teal-500 text-white rounded-xl text-center font-bold">SUBALTERNITY <span class="block text-[10px] font-normal opacity-80">Double Silencing of Margins</span></div>
+                <div class="h-6 w-0.5 bg-teal-200 mx-auto"></div>
+                <div class="p-4 bg-stone-800 text-white rounded-xl text-center font-bold">DECOLONIALITY <span class="block text-[10px] font-normal opacity-80">Ongoing Cultural Resistance</span></div>
+            </div>
+        </section>
+
+        <section id="strategy" class="mb-20">
+            <div class="mb-8 border-l-4 border-teal-800 pl-6">
+                <h2 class="text-3xl font-bold text-stone-900 mb-3">Final Countdown: Revision Strategy</h2>
+                <p class="text-stone-600 max-w-3xl">
+                    Time is the most critical factor. Select your remaining study time to get a tailored list of focus concepts and high-impact quotes.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <button onclick="setStrategy(10)" class="p-8 bg-white border-2 border-stone-200 rounded-3xl text-left hover:border-teal-700 transition group">
+                    <div class="w-12 h-12 bg-stone-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-teal-50">
+                        <span class="text-teal-900 font-bold">10h</span>
+                    </div>
+                    <h5 class="font-bold text-xl mb-2">Comprehensive Deep Dive</h5>
+                    <p class="text-xs text-stone-500">Focus on the Big Four + Texts (Rhys/Ngugi).</p>
+                </button>
+                <button onclick="setStrategy(5)" class="p-8 bg-white border-2 border-stone-200 rounded-3xl text-left hover:border-teal-700 transition group">
+                    <div class="w-12 h-12 bg-stone-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-teal-50">
+                        <span class="text-teal-900 font-bold">5h</span>
+                    </div>
+                    <h5 class="font-bold text-xl mb-2">High-Probability Blitz</h5>
+                    <p class="text-xs text-stone-500">Conceptual definitions only. Abandon texts.</p>
+                </button>
+                <button onclick="setStrategy(2)" class="p-8 bg-white border-2 border-stone-200 rounded-3xl text-left hover:border-teal-700 transition group">
+                    <div class="w-12 h-12 bg-stone-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-teal-50">
+                        <span class="text-teal-900 font-bold">2h</span>
+                    </div>
+                    <h5 class="font-bold text-xl mb-2">Emergency Core Lock</h5>
+                    <p class="text-xs text-stone-500">Keywords and 3 Master Quotes only.</p>
+                </button>
+            </div>
+
+            <div id="strategyOutput" class="mt-8 p-8 bg-stone-900 text-stone-200 rounded-3xl hidden animate-fade-in">
+                <!-- Dynamically filled -->
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-stone-900 text-stone-400 py-12 px-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+            <p class="text-xs uppercase tracking-widest font-bold mb-4 md:mb-0">OSOU PEG-201 Study Aid &copy; 2024</p>
+            <div class="flex space-x-6 text-[10px] font-bold uppercase">
+                <span>Terms of Study</span>
+                <span>Privacy in Epistemology</span>
+                <span>Subaltern Feedback</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const units = [
+            { id: 1, title: "Intro to Postcolonialism", cat: "A", prob: 90, bloom: "L4 (Analyze)", marks: "15 / 10", keywords: "Enlightenment, Civilizing Mission" },
+            { id: 2, title: "Negritude & Subaltern", cat: "A", prob: 95, bloom: "L4 (Evaluate)", marks: "15", keywords: "Essentialism, Guha, Gramsci" },
+            { id: 3, title: "Decolonization", cat: "A", prob: 90, bloom: "L4 (Compare)", marks: "15 / 10", keywords: "Linguistic Imperialism, Cultural Bomb" },
+            { id: 4, title: "Neocolonialism", cat: "A", prob: 95, bloom: "L4 (Evaluate)", marks: "15", keywords: "Nkrumah, SAPs, IMF" },
+            { id: 5, title: "Critique of Postcolonialism", cat: "A", prob: 90, bloom: "L4 (Evaluate)", marks: "15", keywords: "Aijaz Ahmad, Materialism" },
+            { id: 6, title: "Bhabha's Hybridity", cat: "A", prob: 98, bloom: "L4 (Analyze)", marks: "15 / 10", keywords: "Mimicry, Third Space, Ambivalence" },
+            { id: 7, title: "Spivak's Subaltern", cat: "A", prob: 95, bloom: "L4 (Evaluate)", marks: "15", keywords: "Epistemic Violence, Sati" },
+            { id: 8, title: "Said's Orientalism", cat: "A", prob: 100, bloom: "L4 (Evaluate)", marks: "15 / 10", keywords: "Discourse, Power/Knowledge" },
+            { id: 9, title: "Fanon's Wretched", cat: "A", prob: 95, bloom: "L4 (Analyze)", marks: "15", keywords: "Revolutionary Violence, Manichaean" },
+            { id: 10, title: "Provincializing Europe", cat: "A", prob: 90, bloom: "L4 (Evaluate)", marks: "15 / 10", keywords: "Historicism, Chakrabarty" },
+            { id: 11, title: "Wide Sargasso Sea", cat: "A", prob: 95, bloom: "L4 (Create)", marks: "15", keywords: "Writing Back, Imperial Feminism" },
+            { id: 12, title: "Kanthapura", cat: "A", prob: 95, bloom: "L4 (Analyze)", marks: "15 / 10", keywords: "Appropriation, Sthala-Purana" },
+            { id: 13, title: "Decolonising Mind", cat: "A", prob: 98, bloom: "L4 (Analyze)", marks: "15", keywords: "Ngugi, Cultural Bomb" },
+            { id: 14, title: "Settler Poetry", cat: "B", prob: 80, bloom: "L4 (Compare)", marks: "10", keywords: "A.D. Hope, Landscape" },
+            { id: 15, title: "Night of the Scorpion", cat: "A", prob: 95, bloom: "L4 (Analyze)", marks: "10", keywords: "Superstition vs. Rationalism" },
+            { id: 16, title: "AI in Postcolonialism", cat: "A", prob: 85, bloom: "L4 (Evaluate)", marks: "10 / 5", keywords: "Algorithmic Orientalism" }
+        ];
+
+        function populateTable(data) {
+            const body = document.getElementById('unitTableBody');
+            body.innerHTML = data.map(u => `
+                <tr class="hover:bg-stone-50 transition category-${u.cat.toLowerCase()}">
+                    <td class="px-6 py-4 font-bold text-stone-800">${u.id}. ${u.title}<br><span class="text-[10px] text-stone-500 uppercase tracking-tight">${u.keywords}</span></td>
+                    <td class="px-6 py-4"><span class="px-2 py-1 rounded text-[10px] font-bold ${u.cat === 'A' ? 'bg-teal-100 text-teal-800' : 'bg-stone-100 text-stone-600'}">${u.cat}</span></td>
+                    <td class="px-6 py-4 font-mono text-teal-700">${u.prob}%</td>
+                    <td class="px-6 py-4 text-xs">${u.bloom}</td>
+                    <td class="px-6 py-4 font-bold text-stone-900">${u.marks}</td>
+                </tr>
+            `).join('');
+        }
+
+        function filterUnits(cat) {
+            if(cat === 'all') populateTable(units);
+            else populateTable(units.filter(u => u.cat === cat));
+        }
+
+        function searchUnits() {
+            const val = document.getElementById('unitSearch').value.toLowerCase();
+            populateTable(units.filter(u => u.title.toLowerCase().includes(val) || u.keywords.toLowerCase().includes(val)));
+        }
+
+        function setStrategy(hours) {
+            const output = document.getElementById('strategyOutput');
+            output.classList.remove('hidden');
+            let html = "";
+            if(hours === 10) {
+                html = `<h4 class="text-2xl font-bold text-teal-400 mb-4">10-Hour Deep Strategy</h4>
+                        <ul class="space-y-3 text-sm">
+                            <li><span class="text-white font-bold">Said (2h):</span> Focus on Contrapuntal Reading and Discourse.</li>
+                            <li><span class="text-white font-bold">Texts (3h):</span> Read summaries of Wide Sargasso Sea & Kanthapura.</li>
+                            <li><span class="text-white font-bold">Group D Practice (3h):</span> Write one sample essay connecting 3 theories.</li>
+                            <li><span class="text-white font-bold">Review (2h):</span> Units 15 & 16.</li>
+                        </ul>`;
+            } else if(hours === 5) {
+                html = `<h4 class="text-2xl font-bold text-teal-400 mb-4">5-Hour High-Probability Strategy</h4>
+                        <p class="mb-4 text-stone-400">Abandon secondary readings. Focus on definitional accuracy.</p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-stone-800 p-3 rounded">Orientalism (Said)</div>
+                            <div class="bg-stone-800 p-3 rounded">Hybridity (Bhabha)</div>
+                            <div class="bg-stone-800 p-3 rounded">Subaltern (Spivak)</div>
+                            <div class="bg-stone-800 p-3 rounded">Psychology (Fanon)</div>
+                        </div>`;
+            } else {
+                html = `<h4 class="text-2xl font-bold text-teal-400 mb-4">2-Hour Emergency Protocol</h4>
+                        <p class="text-stone-300 font-bold mb-4 italic">Memorize these exact phrases for bonus marks:</p>
+                        <ul class="space-y-4">
+                            <li class="border-l-2 border-teal-500 pl-4">"Almost the same, but not quite." - <span class="text-white">Bhabha</span></li>
+                            <li class="border-l-2 border-teal-500 pl-4">"Language is a carrier of culture, memory, and identity." - <span class="text-white">Ngugi</span></li>
+                            <li class="border-l-2 border-teal-500 pl-4">"Neocolonialism represents power without responsibility." - <span class="text-white">Nkrumah</span></li>
+                        </ul>`;
+            }
+            output.innerHTML = html;
+            window.scrollTo({ top: output.offsetTop - 100, behavior: 'smooth' });
+        }
+
+        // Charts
+        window.onload = function() {
+            populateTable(units);
+
+            new Chart(document.getElementById('marksChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Group A (15)', 'Group B (25)', 'Group C (20)', 'Group D (15)'],
+                    datasets: [{
+                        data: [15, 25, 20, 15],
+                        backgroundColor: ['#134e4a', '#0d9488', '#2dd4bf', '#99f6e4'],
+                        borderWidth: 0
+                    }]
+                },
+                options: { maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+            });
+
+            new Chart(document.getElementById('probabilityChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Said', 'Bhabha', 'Spivak', 'Ngugi', 'Fanon', 'Rhys', 'Rao'],
+                    datasets: [{
+                        label: 'Prob. of 15-Mark appearance (%)',
+                        data: [100, 98, 95, 98, 95, 95, 95],
+                        backgroundColor: '#134e4a',
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true, max: 100 } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        };
+    </script>
+</body>
+</html>
